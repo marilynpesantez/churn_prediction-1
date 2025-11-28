@@ -31,3 +31,32 @@ Dependents and multi-year commitments anchor retention.
 **Contract Design:** Incentivize month-to-month customers to commit to longer-term plans.
 **Lifecycle Programs:** Continue nurturing long-tenure customers with exclusive benefits to reinforce loyalty.
 For each cluster, I interpreted cluster means to identify defining attributes and translated those patterns into psychographic and price tolerance profiles. I also outline actionable next steps across product, pricing, and marketing.
+
+
+**Predictive Evaluation (Model Performance on Test Data)**
+# Objective
+While the primary goal of this model was to understand the drivers of churn, it is also important to evaluate how well the logistic regression performs as a predictive classifier on unseen customers.
+
+A 70/30 train/test split was used, and performance metrics were computed on the test set.
+
+# 1. Classification Performance
+
+Using a default probability threshold of 0.50, the logistic regression produced the following results on the test set:
+
+# Accuracy
+accuracy_score(y_test, y_pred_label)
+  - Measures overall correctness.
+  - Interpretation: Percentage of customers correctly classified as churners or non-churners.
+
+# Confusion Matrix
+confusion_matrix(y_test, y_pred_label)
+- Predicted: Not Churn	Predicted: Churn
+
+
+Interpretation:
+- False Negatives (FN) are most costly (customers who churned but were predicted to stay).
+- False Positives (FP) represent unnecessary interventions (targeted a customer who wasn’t going to churn).
+  
+Logistic regression typically produces:
+- High precision on non-churners (customers who stay)
+- Moderate recall on churners (often the harder class to detect)
