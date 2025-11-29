@@ -5,20 +5,28 @@ This project applies logistic regression to a telecommunications dataset (telco.
 A logistic regression model was fit to estimate the likelihood that a customer will churn (Churn = 1) or remain an active customer (Churn = 0).  
 
 - Encoding: All categorical variables were one-hot encoded
-- Multicollinearity: Redundant dummy variables were removed to eliminate perfect multicollinearity
+- Multicollinearity: Redundant dummy variables were removed to eliminate perfect multicollinearity (e.g., MultipleLines_No phone service, No internet service sub-columns).
 - Train/test split: The data was split into 70% train and 30% test with stratification on church to maintain an even churn rate across both sets.
 - Estimation: The model was estimated using statsmodel.Logit. This allowed access to coefficients, p-values, confidence intervals, and AIC for model evaluation.
 
-The final model reached a Pseudo R^2 value of about .26, suggesting that about a quarter of churn behavior can be explained using the attribute included, revealing strong explanatory power for this behavioral churn problem.
+The final model reached a Pseudo R^2 value of about .26, suggesting that about a quarter of churn behavior can be explained using the attributes included, revealing strong explanatory power for this behavioral churn problem.
 
-All categorical features were one-hot encoded, and multicollinearity was addressed by dropping redundant dummy variables (e.g., MultipleLines_No phone service, No internet service sub-columns).
-
-The model achieved a Pseudo R² of ~0.26, suggesting that roughly a quarter of churn behavior can be explained by the included customer attributes — a solid level of explanatory power for behavioral churn data.
 
 # Methodology
 **(1) Preprocess data:**
+- Converted TotalCharges to numeric and dropped rows with missing values.
+- Dropped unique customer identifier (customerID)
+- One-hot encoded categorical variables using pd.get_dummies()
+- Dropped redundant dummy variables (ex: No phone service, No internet service) to avoid perfect multicollinearity
+- Ensured all predictors were numeric, like converting boolean dummies to float
 
-**(2) Determine optimal k value:**
+**(2) Train/Test Split & Model Fitting:**
+- Separated predictors and target:
+-   Target: Churn (retained = 0, churned = 1)
+-   Features: tenure, charges, service mix, contract type, payment method, etc.
+-   Split into training (70%) and test (30%) sets, stratified on churn to maintain even rate.
+-   Added intercept term and fit a logistic regression model using statsmodels.logit
+-   Extracted coefficients, p-values, and od ratios
 
 **(3) Ran the K-means algorithm with k=4**
 
