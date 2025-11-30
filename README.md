@@ -9,45 +9,57 @@ Quantify how customer attributes (e.g., contract type, internet service, billing
 Identify how well the logistic regression model predicts churn on test data using accuracy, AUC, and optimized decision thresholds to understand how reliably the model can flag at-risk customers.
 
 
-# Model Overview
+# Model Overview & Methodology
 A logistic regression model was fit to estimate the likelihood that a customer will churn (Churn = 1) rather than remain active (Churn = 0). Key modeling decisions were made:
 
-- All categorical variables were **one-hot encoded**
-- **Redundant dummy variables were removed** to eliminate perfect multicollinearity 
-- **Train/test split with stratification** to maintain an even churn rate across both sets
-- The model was estimated using statsmodel.Logit for coefficients, p-values, and odd ratios
+
 - Predictive scoring with ROC--AUC and confusion matrices on the held-out test set
 
 The final model achieved a Pseudo R^2 of about .26, suggesting that about a quarter of churn behavior can be explained by the included attributes, indicating strong explanatory power for customer churn behavior.
-
 
 # Methodology
 **(1) Data Proprocessing:**
 - Converted TotalCharges to numeric and dropped rows with missing values.
 - Dropped unique customer identifier (customerID)
 - One-hot encoded categorical variables using pd.get_dummies()
-- Dropped redundant dummy variables (e.g., MultipleLines_No phone service, No internet service sub-columns) to avoid perfect multicollinearity
+- Dropped redundant dummy variables (e.g., MultipleLines_No phone service, No internet service sub-columns) to eliminate perfect multicollinearity
 - Ensured all predictors were numeric; converted boolean dummies to float
 
 **(2) Train/Test Split & Model Fitting:**
-- Separated predictors and target:
-  -   Target: Churn (retained = 0, churned = 1)
-  -   Features: tenure, charges, service mix, contract type, payment method, etc.
--   Split into training (70%) and test (30%) sets, stratified on churn to maintain even rate.
--   Added intercept term and fit a logistic regression model using statsmodels.logit
--   Extracted coefficients, p-values, and odd ratios
+- Separated predictors (X) and binary target (Y)
+  -   X: tenure, charges, service mix, contract type, payment method, etc.
+  -   Y: Churn (retained = 0, churned = 1)
+- **Used a train/test (70%/30%) split with stratification** to maintain an even churn rate across both sets
+-   Fit/estimated a logistic regression model using statsmodels.logit to extract coefficients, p-values, and odd ratios
 
-# Interpretations
+
+- Predictive scoring with ROC--AUC and confusion matrices on the held-out test set
+
+The final model achieved a Pseudo R^2 of about .26, suggesting that about a quarter of churn behavior can be explained by the included attributes, indicating strong explanatory power for customer churn behavior.
+
+
+# Key Insights & Interpretations
 **A. Interpret Logistic Regression**
-Understand the direction, magnitude, and significance of each predictor
+Understand the direction, magnitude, and significance of each predictor using:
+- Logistic regression coefficients
+- Odds ratios
+- 95% confidence intervals
+- p-values
 
+This section answers:
+Which features are most strongly associated with churn, and why?
 
+**Predictive Evaluation**
+Evaluate how well the model identifies churners on unseen data using the following metrics:
+- Accuracy
+- ROC–AUC
+- Confusion matrix
+- Optimal threshold selection (≈ 0.24) using Youden’s J statistic
 
-- Evaluated model performance on the test set using accuracy, ROCAUC, and the cohnfusion matrix
+This section answers:
+How well does the model detect churn when applied in a real-world scenario?
+
 - Used ROC analysis to identify optimal decision threshold
-
-# Key Insights (Odds Ratio Interpretation)
-
 
 # Summary of Findings
 - Contract length and tenure are the strongest retention indicators.
