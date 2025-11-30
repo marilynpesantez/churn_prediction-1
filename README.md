@@ -1,6 +1,9 @@
 # Background
-This project applies logistic regression to a telecommunications dataset (telco.csv) to understand which customer and service attributes are most strongly associated with churn. The primary goal is to understand why customers churn and what actions the business can take to reduce it. 
+This project applies logistic regression to a telecommunications dataset (telco.csv) to understand which customer and service attributes are most strongly associated with churn and what actions the business can take to reduce churn.
 
+The analysis is structured around to main objectives:
+1. Interpretive Modeling
+Quantify how customer attributes (e.g., contract type, internet service, billing method) influence churn likelihood. This section focuses on odds ratios, coefficients, and business insights to understand why customers churn. 
 # Model Overview
 A logistic regression model was fit to estimate the likelihood that a customer will churn (Churn = 1) or remain an active customer (Churn = 0).  
 
@@ -22,23 +25,25 @@ The final model reached a Pseudo R^2 value of about .26, suggesting that about a
 
 **(2) Train/Test Split & Model Fitting:**
 - Separated predictors and target:
--   Target: Churn (retained = 0, churned = 1)
--   Features: tenure, charges, service mix, contract type, payment method, etc.
+  -   Target: Churn (retained = 0, churned = 1)
+  -   Features: tenure, charges, service mix, contract type, payment method, etc.
 -   Split into training (70%) and test (30%) sets, stratified on churn to maintain even rate.
 -   Added intercept term and fit a logistic regression model using statsmodels.logit
 -   Extracted coefficients, p-values, and od ratios
 
-**(3) Ran the K-means algorithm with k=4**
-
+**(3) Model Evaluation (Interpretive + Predictive)
+- Interpreted odds ratios to understand which attributes increase or decrease churn likelihood
+- Evaluated model performance on the test set using accuracy, ROCAUC, and the cohnfusion matrix
+- Used ROC analysis to identify optimal decision threshold
 
 # Key Insights (Odds Ratio Interpretation)
 
 
 # Summary of Findings
-Contract length and tenure are the strongest retention indicators.
-Fiber-optic and streaming service users drive the majority of churn risk.
-Paperless billing and electronic check usage flag less-sticky digital customers.
-Dependents and multi-year commitments anchor retention.
+- Contract length and tenure are the strongest retention indicators.
+- Fiber-optic and streaming service users drive the majority of churn risk.
+- Paperless billing and electronic check usage flag less-sticky digital customers.
+- Dependents and multi-year commitments anchor retention.
 
 
 # Strategic Implications
